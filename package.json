@@ -1,0 +1,100 @@
+{
+  "name": "@danil-karnaukhov/ui-kit",
+  "version": "0.1.0",
+  "type": "module",
+  "description": "React components library",
+  "keywords": [
+    "react",
+    "components",
+    "ui-kit",
+    "ui"
+  ],
+  "homepage": "https://github.com/danil-karnaukhov/ui-kit#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/danil-karnaukhov/ui-kit.git"
+  },
+  "author": "Danil Karnaukhov",
+  "license": "MIT",
+  "module": "./index.js",
+  "types": "./index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./index.d.ts",
+      "import": "./index.js"
+    },
+    "./styles/reset.css": "./styles/reset.css",
+    "./styles/fonts.css": "./styles/fonts.css",
+    "./styles/tokens.css": "./styles/tokens.css",
+    "./styles/base.css": "./styles/base.css"
+  },
+  "sideEffects": [
+    "*.css"
+  ],
+  "scripts": {
+    "storybook": "storybook dev -p 6006",
+    "build:storybook": "storybook build",
+    "build": "pnpm run typecheck && tsdown",
+    "test": "vitest run",
+    "test:watch": "vitest watch",
+    "typecheck": "tsc -b",
+    "format": "oxfmt --no-error-on-unmatched-pattern",
+    "format:check": "oxfmt --check --no-error-on-unmatched-pattern",
+    "lint": "oxlint",
+    "lint:fix": "oxlint --fix",
+    "stylelint": "stylelint \"**/*.{css,scss}\"",
+    "stylelint:fix": "stylelint \"**/*.{css,scss}\" --fix",
+    "lint-staged": "lint-staged",
+    "check": "pnpm run typecheck && pnpm run lint && pnpm run stylelint && pnpm run format:check && pnpm run test",
+    "prepare": "git config core.hooksPath ./.git-hooks || true"
+  },
+  "peerDependencies": {
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^21.2.4",
+    "@commitlint/config-conventional": "^21.2.4",
+    "@storybook/addon-a11y": "^10.6.5",
+    "@storybook/addon-docs": "^10.6.5",
+    "@storybook/react-vite": "^10.6.5",
+    "@testing-library/dom": "^10.4.2",
+    "@testing-library/jest-dom": "^7.0.1",
+    "@testing-library/react": "^16.3.3",
+    "@tsdown/css": "^0.22.14",
+    "@types/node": "^24.19.1",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "@vitejs/plugin-react": "^6.1.2",
+    "happy-dom": "^21.0.4",
+    "lint-staged": "^17.6.0",
+    "oxfmt": "^0.75.0",
+    "oxlint": "^1.90.0",
+    "oxlint-tsgolint": "^7.0.2005",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "sass-embedded": "^1.105.1",
+    "storybook": "^10.6.5",
+    "stylelint": "^17.16.0",
+    "stylelint-config-recess-order": "^7.9.0",
+    "stylelint-config-standard-scss": "^17.0.0",
+    "stylelint-order": "^8.1.2",
+    "tsdown": "^0.22.14",
+    "typescript": "~6.0.3",
+    "vite": "^8.3.5",
+    "vitest": "^4.1.11"
+  },
+  "devEngines": {
+    "runtime": {
+      "name": "node",
+      "version": "^24.16.0",
+      "onFail": "error"
+    },
+    "packageManager": {
+      "name": "pnpm",
+      "version": "12.11.2",
+      "onFail": "error"
+    }
+  },
+  "packageManager": "pnpm@12.11.2"
+}

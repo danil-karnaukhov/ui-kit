@@ -1,0 +1,9 @@
+{
+  "*.{js,jsx,ts,tsx}": [
+    "oxlint --fix",
+    "oxfmt --check --no-error-on-unmatched-pattern",
+    "vitest related --run --passWithNoTests"
+  ],
+  "*.{css,scss}": ["stylelint --fix", "oxfmt --no-error-on-unmatched-pattern"],
+  "!(*.{js,jsx,ts,tsx,css,scss})": "oxfmt --no-error-on-unmatched-pattern"
+}
