@@ -36,9 +36,9 @@
   --color-background-disabled: rgb(var(--color-gray-900-rgb), 0.03);
   --color-background-overlay: rgb(var(--color-gray-900-rgb), 0.3);
 
-  --color-background-input: transparent;
+  --color-background-input: var(--color-background-surface);
   --color-background-input-hovered: var(--color-gray-50);
-  --color-background-input-pressed: transparent;
+  --color-background-input-pressed: var(--color-background-surface);
 
   --color-background-selected: var(--color-blue-500);
   --color-background-selected-hovered: var(--color-blue-600);
