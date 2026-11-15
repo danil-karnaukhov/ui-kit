@@ -1,64 +1,63 @@
 .input {
-  --input-padding: var(--space-12);
+  --input-padding-horizontal: var(--space-12);
   --input-radius: var(--radius-m);
+  --input-autofill-shadow-spread: 1000px;
 
-  position: relative;
   box-sizing: border-box;
-  display: flex;
-  align-items: center;
+  display: block;
   width: 100%;
   height: var(--input-height);
+  padding: 0 var(--input-padding-horizontal);
+  margin: 0;
   font-family: var(--font-family-body);
   font-size: var(--font-size-body-m);
   line-height: var(--line-height-body-m);
-  cursor: text;
+  color: var(--color-text);
+  outline: var(--border-width) solid transparent;
   background-color: var(--input-color-background);
   border: var(--border-width) solid var(--input-color-border);
   transition:
     color 0.2s ease,
     background-color 0.2s ease,
-    border-color 0.2s ease;
+    border-color 0.2s ease,
+    outline-color 0.2s ease;
 
   &:hover {
     background-color: var(--input-color-background-hovered);
     border-color: var(--input-color-border-hovered);
   }
 
-  &:has(> input:focus) {
+  &:focus {
+    outline-color: var(--input-color-border-pressed);
     background-color: var(--input-color-background-pressed);
     border-color: var(--input-color-border-pressed);
   }
 
-  &:has(> input:disabled) {
+  &_hasError {
+    &,
+    &:hover,
+    &:focus {
+      border-color: var(--color-border-danger);
+    }
+
+    &:focus {
+      outline-color: var(--color-border-danger);
+    }
+  }
+
+  &:disabled {
+    color: var(--color-text-disabled);
     cursor: not-allowed;
     background-color: var(--color-background-disabled);
     border-color: transparent;
   }
 
-  &_error {
-    &,
-    &:hover,
-    &:has(> input:focus) {
-      border-color: var(--color-border-danger);
-    }
+  &::placeholder {
+    color: var(--color-text-subtlest);
   }
 
-  &::after {
-    position: absolute;
-    inset: 0;
-    pointer-events: none;
-    content: '';
-    border: var(--border-width) solid transparent;
-    border-radius: inherit;
-    transition: border-color 0.2s ease;
-  }
-
-  &:has(> input:focus)::after {
-    border-color: var(--input-color-border-pressed);
-  }
-
-  &_error:has(> input:focus)::after {
-    border-color: var(--color-border-danger);
+  &:disabled::placeholder {
+    color: var(--color-text-disabled);
   }
 
   &_variant {
@@ -97,151 +96,64 @@
     &_brick-round {
       border-radius: 0 var(--input-radius) var(--input-radius) 0;
     }
-
-    &_round-clear {
-      border-right: none;
-      border-radius: var(--input-radius) 0 0 var(--input-radius);
-
-      &::after {
-        border-right: none;
-      }
-    }
-
-    &_clear-round {
-      border-left: none;
-      border-radius: 0 var(--input-radius) var(--input-radius) 0;
-
-      &::after {
-        border-left: none;
-      }
-    }
-
-    &_clear-clear {
-      border-right: none;
-      border-left: none;
-      border-radius: 0;
-
-      &::after {
-        border-right: none;
-        border-left: none;
-      }
-    }
   }
 
   &_size {
     &_s {
       --input-height: 40px;
-      --input-icon-size: 20px;
+      --input-padding-vertical: var(--space-8);
     }
 
     &_m {
       --input-height: 48px;
-      --input-icon-size: 24px;
+      --input-padding-vertical: var(--space-12);
     }
 
     &_l {
       --input-height: 56px;
-      --input-icon-size: 24px;
+      --input-padding-vertical: var(--space-16);
     }
   }
 
-  & > input {
-    box-sizing: border-box;
-    width: 100%;
-    min-width: 0;
-    height: 100%;
-    padding: 0 var(--input-padding);
+  &:is(textarea) {
+    height: auto;
+    min-height: var(--input-height);
+    padding: var(--input-padding-vertical) var(--input-padding-horizontal);
+    resize: vertical;
+  }
+
+  &:is(select) {
+    appearance: none;
+    cursor: pointer;
+  }
+
+  &[type='number'] {
+    appearance: textfield;
+  }
+
+  &[type='number']::-webkit-inner-spin-button,
+  &[type='number']::-webkit-outer-spin-button {
     margin: 0;
-    font-family: inherit;
-    font-size: inherit;
-    color: var(--color-text);
-    cursor: inherit;
-    background-color: transparent;
-    border: none;
-    border-radius: inherit;
-
-    &:focus {
-      outline: none;
-    }
-
-    &:disabled {
-      color: var(--color-text-disabled);
-    }
-
-    &::placeholder {
-      color: var(--color-text-subtlest);
-    }
-
-    &:disabled::placeholder {
-      color: var(--color-text-disabled);
-    }
-
-    &[type='number'] {
-      appearance: textfield;
-    }
-
-    &[type='number']::-webkit-inner-spin-button,
-    &[type='number']::-webkit-outer-spin-button {
-      margin: 0;
-      appearance: none;
-    }
-
-    &[type='search']::-webkit-search-cancel-button,
-    &[type='search']::-webkit-search-decoration {
-      appearance: none;
-    }
-
-    &:-webkit-autofill,
-    &:-webkit-autofill:hover,
-    &:-webkit-autofill:focus,
-    &:-webkit-autofill:active {
-      box-shadow: 0 0 0 30px var(--input-color-background) inset !important;
-      -webkit-text-fill-color: var(--color-text) !important;
-    }
+    appearance: none;
   }
 
-  &__start-content,
-  &__end-content {
-    display: inline-flex;
-    flex-shrink: 0;
-    color: var(--color-text-subtlest);
-
-    :is(svg, img) {
-      width: var(--input-icon-size);
-      height: var(--input-icon-size);
-      color: var(--color-icon);
-    }
+  &[type='search']::-webkit-search-cancel-button,
+  &[type='search']::-webkit-search-decoration {
+    appearance: none;
   }
 
-  &:has(> input:disabled) :is(&__start-content, &__end-content) {
-    color: var(--color-text-disabled);
-
-    svg {
-      color: var(--color-icon-disabled);
-    }
+  &:-webkit-autofill {
+    -webkit-text-fill-color: var(--color-text) !important;
+    box-shadow: inset 0 0 0 var(--input-autofill-shadow-spread) var(--input-color-background) !important;
   }
 
-  &__start-content {
-    margin-right: var(--space-8);
+  &:-webkit-autofill:hover {
+    box-shadow: inset 0 0 0 var(--input-autofill-shadow-spread)
+      var(--input-color-background-hovered) !important;
   }
 
-  &__end-content {
-    margin-left: var(--space-8);
-  }
-
-  &:has(> &__start-content) {
-    padding-left: var(--input-padding);
-
-    & > input {
-      padding-left: 0;
-    }
-  }
-
-  &:has(> &__end-content) {
-    padding-right: var(--input-padding);
-
-    & > input {
-      padding-right: 0;
-    }
+  &:-webkit-autofill:focus {
+    box-shadow: inset 0 0 0 var(--input-autofill-shadow-spread)
+      var(--input-color-background-pressed) !important;
   }
 }

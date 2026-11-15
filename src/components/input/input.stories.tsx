@@ -1,14 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
-import { EyeIcon, LinkIcon, LockIcon, SearchIcon } from 'lucide-react'
 
 import { Input } from './input'
-
-const icons = {
-  SearchIcon: <SearchIcon />,
-  EyeIcon: <EyeIcon />,
-  LinkIcon: <LinkIcon />,
-  LockIcon: <LockIcon />,
-}
 
 const meta = {
   title: 'Inputs/Input',
@@ -16,11 +8,19 @@ const meta = {
   parameters: {
     docs: {
       description: {
-        component: 'Поле ввода текста.',
+        component:
+          'Полиморфное поле ввода. Рендерит `<input>` по умолчанию; через `as` можно указать другой тег.',
       },
     },
   },
   argTypes: {
+    as: {
+      control: { type: 'select' },
+      options: ['input', 'textarea', 'select', 'button'],
+      table: {
+        defaultValue: { summary: 'input' },
+      },
+    },
     variant: {
       table: {
         defaultValue: { summary: 'outline' },
@@ -36,39 +36,28 @@ const meta = {
         defaultValue: { summary: 'm' },
       },
     },
-    startContent: {
-      control: { type: 'select' },
-      options: Object.keys(icons),
-      mapping: icons,
+    placeholder: {
+      description: 'Подсказка, отображаемая в пустом поле ввода',
     },
-    endContent: {
-      control: { type: 'select' },
-      options: Object.keys(icons),
-      mapping: icons,
-    },
-    rootProps: {
-      table: {
-        type: { summary: 'Object' },
-        defaultValue: { summary: '{}' },
-      },
-    },
-    error: {
+    hasError: {
       table: {
         defaultValue: { summary: 'false' },
       },
     },
     disabled: {
+      description: 'Блокирует поле ввода',
       table: {
         defaultValue: { summary: 'false' },
       },
     },
   },
   args: {
+    as: 'input',
     variant: 'outline',
     shape: 'round',
     size: 'm',
     placeholder: 'Введите значение',
-    error: false,
+    hasError: false,
     disabled: false,
   },
 } satisfies Meta<typeof Input>
@@ -96,9 +85,6 @@ export const Shape: StoryObj<typeof meta> = {
       <Input {...args} shape='brick' />
       <Input {...args} shape='round-brick' />
       <Input {...args} shape='brick-round' />
-      <Input {...args} shape='round-clear' />
-      <Input {...args} shape='clear-round' />
-      <Input {...args} shape='clear-clear' />
     </div>
   ),
   argTypes: {
@@ -108,31 +94,12 @@ export const Shape: StoryObj<typeof meta> = {
   },
 }
 
-export const StartAndEndContent: StoryObj<typeof meta> = {
-  render: (args) => (
-    <div className='sb-column'>
-      <Input {...args} startContent={icons.LinkIcon} />
-      <Input {...args} endContent={icons.SearchIcon} />
-      <Input {...args} startContent={icons.LockIcon} endContent={icons.EyeIcon} />
-      <Input {...args} startContent='До' endContent='шт.' />
-    </div>
-  ),
-  argTypes: {
-    startContent: {
-      table: { disable: true },
-    },
-    endContent: {
-      table: { disable: true },
-    },
-  },
-}
-
 export const Sizes: StoryObj<typeof meta> = {
   render: (args) => (
     <div className='sb-column'>
-      <Input {...args} size='s' startContent={icons.SearchIcon} />
-      <Input {...args} size='m' startContent={icons.SearchIcon} />
-      <Input {...args} size='l' startContent={icons.SearchIcon} />
+      <Input {...args} size='s' />
+      <Input {...args} size='m' />
+      <Input {...args} size='l' />
     </div>
   ),
   argTypes: {
@@ -142,18 +109,30 @@ export const Sizes: StoryObj<typeof meta> = {
   },
 }
 
+export const Textarea: StoryObj<typeof meta> = {
+  args: {
+    as: 'textarea',
+    rows: 4,
+  },
+  argTypes: {
+    as: {
+      table: { disable: true },
+    },
+  },
+}
+
 export const Error: StoryObj<typeof meta> = {
   render: (args) => (
     <div className='sb-column'>
-      <Input {...args} variant='outline' error />
-      <Input {...args} variant='subtle' error />
+      <Input {...args} variant='outline' hasError />
+      <Input {...args} variant='subtle' hasError />
     </div>
   ),
   argTypes: {
     variant: {
       table: { disable: true },
     },
-    error: {
+    hasError: {
       table: { disable: true },
     },
   },
